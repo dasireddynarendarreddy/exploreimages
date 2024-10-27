@@ -26,6 +26,7 @@ const fetchPhotos = async (title = "tree") => {
 const App = () => {
   const [query, setQuery] = useState("tree");
   const[usersearch,setsearch]=useState();
+  
   const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery(['photos', query], () => fetchPhotos(query));
   const [likes, setLikes] = useState([]);
@@ -67,6 +68,10 @@ const App = () => {
     setQuery(newQuery);
     queryClient.invalidateQueries(['photos', newQuery]);
   };
+  const  viewUsers=()=>{
+     nav('/users')
+  }
+  
 const search=()=>{
   setQuery(usersearch)
    
@@ -77,10 +82,7 @@ const search=()=>{
   return (
     <div>
       <div className='flex flex-wrap gap-2'>
-        <button onClick={() => handleQueryChange("animals")} className='bg-black rounded-lg text-white'>Animals</button>
-        <button onClick={() => handleQueryChange("nature")} className='bg-black rounded-lg text-white'>Nature</button>
-        <button onClick={() => handleQueryChange("bikes")} className='bg-black rounded-lg text-white'>Bikes</button>
-        
+        <button onClick={viewUsers}>Users</button>
       </div>
       <Box
       component="form"

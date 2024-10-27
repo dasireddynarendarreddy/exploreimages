@@ -9,12 +9,13 @@ import './Users.css';
 import { useNavigate } from 'react-router-dom';
 
 const fetchPhotos = async (name) => {
-  const result = await axios.get(`https://api.unsplash.com/search/users?page=1&query=${name}&per_page=40&client_id=65nrgCZc9Y1c7fYQwH4NasdAPVFXjdcO8jJs6K73_rs`);
+  let data=name
+  const result = await axios.get(`https://api.unsplash.com/search/users?page=1&query=${data}&per_page=40&client_id=65nrgCZc9Y1c7fYQwH4NasdAPVFXjdcO8jJs6K73_rs`);
   return result.data.results;
 };
 
 function Users() {
-  const [name, setName] = useState('natuer');
+  const [name, setName] = useState("italy");
   const [submittedName, setSubmittedName] = useState(name);
   const [isFetching, setIsFetching] = useState(false);
   const navigate = useNavigate();
@@ -34,7 +35,10 @@ function Users() {
   };
 
   const handleChange = (e) => {
+    
     setName(e.target.value);
+    
+    
   };
 
   const getData = async () => {
@@ -52,15 +56,18 @@ function Users() {
   if (error) return <div>{error.message}</div>;
 
   return (
-    <div className='flex flex-row flex-wrap gap-2'>
+    <div className='w-fit'>
       <input
         type="text"
         value={name}
         onChange={handleChange}
         className='border-2 border-black'
+        placeholder='search-user-by-name'
       />
       <button onClick={getData}>SUBMIT</button>
-      {data.length > 0 ? (
+    <div className='flex flex-row flex-wrap gap-2'>
+      
+      {
         data.map((res) => (
           <div key={res.id}>
             <div>
@@ -88,10 +95,9 @@ function Users() {
               </button>
             </div>
           </div>
-        ))
-      ) : (
-        <h1>No data</h1>
-      )}
+        ))}
+      
+    </div>
     </div>
   );
 }
