@@ -8,7 +8,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import './loader.css'
+
 
 const fetchPhotos = async (title = "tree") => {
   const response = await axios.get('https://api.unsplash.com/search/collections', {
@@ -51,6 +51,13 @@ const App = () => {
       });
     }
   };
+  const downloadImage=async(res)=>{
+     const response=await axios.get(res);
+     console.log(response)
+     const result=await response.blob();
+     const url=window.URL.createObjectURL(result)
+     console.log(url)
+  }
 
   const click = (id) => {
     nav(`photo/${id}`);
@@ -111,8 +118,8 @@ const search=()=>{
                   <FavoriteBorderTwoToneIcon />
                 </button>
                 <a
-                  href={collection.cover_photo.urls.full} // Use the full-size image URL for download
-                  download={`${collection.title}.jpg`} // The downloaded file will have the title as its name
+                   href={collection.cover_photo.urls.full}
+                  onClick={()=>downloadImage(collection.cover_photo.urls.full)}
                 >
                   <ArrowDownwardTwoToneIcon />
                 </a>

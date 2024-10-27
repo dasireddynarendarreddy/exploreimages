@@ -6,7 +6,7 @@ import FavoriteBorderTwoToneIcon from '@mui/icons-material/FavoriteBorderTwoTone
 import ArrowDownwardTwoToneIcon from '@mui/icons-material/ArrowDownwardTwoTone';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import './loader.css'
+
 const getSomePhotos = async (title) => {
   const response = await axios.get('https://api.unsplash.com/search/collections', {
     params: {
@@ -97,10 +97,12 @@ function Photo() {
             <div className="spinner" style={{ border: '5px solid #f3f3f3', borderTop: '5px solid #3498db', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite' }} />
           </div>
         ) : (
-          <img
+          <LazyLoadImage
+          
             src={photoUrl}
             alt={`Photo ID: ${id}`}
             style={{ width: '100%', height: 'auto', display: 'block' }}
+            
           />
         )}
       </div>
